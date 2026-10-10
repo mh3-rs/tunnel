@@ -1,0 +1,9 @@
+# The checks, through the one CI script.
+when:
+  - event: [push, pull_request, manual]
+
+steps:
+  - name: check
+    image: rust:1.98.0-bookworm
+    commands:
+      - scripts/ci.sh
