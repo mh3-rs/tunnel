@@ -25,6 +25,14 @@ pub enum ToBrain {
     Create { bot: String, party: Party },
     /// The bot left its party (asked, or the party ended).
     Leave { bot: String },
+    /// In a quest: where a hunter of the party is (the game's coordinates and area), about twice a second. Every bot
+    /// of the party reports it: the latest one is the truth.
+    Hunter {
+        party: Party,
+        hunter: String,
+        position: [f32; 3],
+        area: u8,
+    },
 }
 
 /// From the brain: what a bot does.
@@ -73,6 +81,12 @@ mod tests {
             },
             ToBrain::Leave {
                 bot: "0ABCDE".into(),
+            },
+            ToBrain::Hunter {
+                party,
+                hunter: "ERESG5".into(),
+                position: [-1025.0, 263.0, 640.0],
+                area: 1,
             },
         ];
         let up = [
