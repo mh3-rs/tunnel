@@ -38,8 +38,12 @@ pub enum ToBrain {
 /// From the brain: what a bot does.
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub enum ToServer {
-    /// Walk to a position (the game's coordinates).
-    Move { bot: String, position: [f32; 3] },
+    /// Walk (or run) to a position (the game's coordinates).
+    Move {
+        bot: String,
+        position: [f32; 3],
+        run: bool,
+    },
     /// Enter an area of the quest's stage.
     ChangeArea { bot: String, area: u8 },
 }
@@ -93,6 +97,7 @@ mod tests {
             ToServer::Move {
                 bot: "0ABCDE".into(),
                 position: [-1025.0, 263.0, 640.0],
+                run: true,
             },
             ToServer::ChangeArea {
                 bot: "0ABCDE".into(),
