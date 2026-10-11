@@ -1,6 +1,6 @@
 # The checks, through the one CI script.
 when:
-  - event: [push, pull_request, manual]
+  - event: [push, pull_request, manual, tag]
 
 steps:
   - name: check

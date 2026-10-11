@@ -1,0 +1,19 @@
+# The crate, to the Gitea registry (.cargo/config.toml), on a version tag once the checks pass: bump `version` in
+# Cargo.toml, commit, tag it the same (`git tag 0.2.0`), push both. A version is published once: the registry refuses
+# it twice.
+when:
+  - event: tag
+    ref: refs/tags/[0-9]*
+
+depends_on: [ci]
+
+steps:
+  - name: publish
+    image: rust:1.98.0-bookworm
+    environment:
+      GITEA_TOKEN:
+        from_secret: gitea_token
+    commands:
+      # The tag and the manifest must agree, or the tag would name another version.
+      - test "$${CI_COMMIT_TAG}" = "$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -1)"
+      - CARGO_REGISTRIES_GITEA_TOKEN="Bearer $${GITEA_TOKEN}" cargo publish --registry gitea --locked
