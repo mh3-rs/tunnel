@@ -4,7 +4,7 @@ description = "The quest bots' tunnel: what the mh3sp server (the bots' body) an
 version = "0.1.0"
 edition = "2024"
 rust-version = "1.98"
-publish = ["gitea"]
+publish = false
 license = "AGPL-3.0-or-later"
 
 [dependencies]
